@@ -34,5 +34,9 @@ RSpec.describe StringCalculator do
     it 'raises an exception if a negative number is included' do
       expect { calc.add("1,-2,3") }.to raise_error(RuntimeError, "negatives not allowed: -2")
     end
+
+    it 'shows all negative numbers in the exception message' do
+      expect { calc.add("1,-2,-4,5\n-7") }.to raise_error(RuntimeError, "negatives not allowed: -2, -4, -7")
+    end
   end
 end
