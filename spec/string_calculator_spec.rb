@@ -14,5 +14,10 @@ RSpec.describe StringCalculator do
     it 'returns the sum if two numbers are passed separated by comma' do
       expect(calc.add("1,5")).to eq(6)
     end
+
+    it 'returns the sum of unlimited numbers' do
+      expect(calc.add("1,2,3")).to eq(6)
+      expect(calc.add("4,5,6,7,8")).to eq(30)
+    end
   end
 end
