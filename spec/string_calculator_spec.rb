@@ -44,5 +44,11 @@ RSpec.describe StringCalculator do
       calc.add("3")
       expect(calc.get_called_count).to eq(2)
     end
+
+    it 'ignores numbers greater than 1000' do
+      expect(calc.add("2,1001")).to eq(2)
+      expect(calc.add("1000,1")).to eq(1001)
+      expect(calc.add("1000,1001,7")).to eq(1007)
+    end
   end
 end
