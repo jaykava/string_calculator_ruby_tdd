@@ -22,12 +22,19 @@ class StringCalculator
     default_delimiters = /,|\n/
     delimiter_regex = default_delimiters
 
-    #supports "//<delimiter>\n" for now
     if numbers.start_with?("//")
-      matched = numbers.match(%r{//(.)\n(.*)})
-      custom_delimiter = matched[1]
-      numbers = matched[2]
-      delimiter_regex = Regexp.new(Regexp.escape(custom_delimiter))
+      if numbers =~ %r{//\[(.+)\]\n(.*)}m
+        # Multi-char delimiter like //[***]\n
+        custom_delimiter = $1
+        numbers = $2
+        delimiter_regex = Regexp.new(Regexp.escape(custom_delimiter))
+      else
+        #supports "//<delimiter>\n" for now
+        matched = numbers.match(%r{//(.)\n(.*)})
+        custom_delimiter = Regexp.escape(matched[1])
+        numbers = matched[2]
+        delimiter_regex = Regexp.new(custom_delimiter)
+      end
     end
 
     num_list = numbers.split(delimiter_regex).map(&:to_i)
