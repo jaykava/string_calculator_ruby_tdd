@@ -38,5 +38,11 @@ RSpec.describe StringCalculator do
     it 'shows all negative numbers in the exception message' do
       expect { calc.add("1,-2,-4,5\n-7") }.to raise_error(RuntimeError, "negatives not allowed: -2, -4, -7")
     end
+
+    it 'method get_called_count tracks how many times add() was called' do
+      calc.add("1,2")
+      calc.add("3")
+      expect(calc.get_called_count).to eq(2)
+    end
   end
 end
