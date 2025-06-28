@@ -9,6 +9,8 @@ class StringCalculator
   private
 
   def parse_numbers(numbers)
-    numbers.split(",").map(&:to_i)
+    delimiters = /,|\n/
+
+    numbers.split(delimiters).map(&:to_i)
   end
 end
