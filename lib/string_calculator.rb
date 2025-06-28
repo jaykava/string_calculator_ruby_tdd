@@ -20,6 +20,13 @@ class StringCalculator
       delimiter_regex = Regexp.new(Regexp.escape(custom_delimiter))
     end
 
-    numbers.split(delimiter_regex).map(&:to_i)
+    num_list = numbers.split(delimiter_regex).map(&:to_i)
+
+    negatives = num_list.select { |n| n < 0 }
+    unless negatives.empty?
+      raise "negatives not allowed: #{negatives.join(', ')}"
+    end
+
+    num_list
   end
 end
