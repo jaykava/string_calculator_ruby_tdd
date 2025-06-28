@@ -9,8 +9,17 @@ class StringCalculator
   private
 
   def parse_numbers(numbers)
-    delimiters = /,|\n/
+    default_delimiters = /,|\n/
+    delimiter_regex = default_delimiters
 
-    numbers.split(delimiters).map(&:to_i)
+    #supports "//<delimiter>\n" for now
+    if numbers.start_with?("//")
+      matched = numbers.match(%r{//(.)\n(.*)})
+      custom_delimiter = matched[1]
+      numbers = matched[2]
+      delimiter_regex = Regexp.new(Regexp.escape(custom_delimiter))
+    end
+
+    numbers.split(delimiter_regex).map(&:to_i)
   end
 end
